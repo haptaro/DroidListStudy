@@ -19,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity() {
 
     private lateinit var myListView: ListView
+    private lateinit var eventItems: List<Event>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +29,7 @@ class MainActivity : AppCompatActivity() {
 
         myListView.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, DetailActivity::class.java)
+            intent.putExtra("文字列", eventItems[position].title)
             startActivity(intent)
         }
 
@@ -60,8 +62,8 @@ class MainActivity : AppCompatActivity() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ connpassEvent ->
+                    eventItems = connpassEvent.events
                     handleResponse(connpassEvent.events)
-
                 })
     }
 
