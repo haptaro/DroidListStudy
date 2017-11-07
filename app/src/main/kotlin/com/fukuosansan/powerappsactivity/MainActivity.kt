@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val searchText = findViewById<EditText>(R.id.searchText)
+        searchText.editableText.clear()
+        searchText.isFocusable = false
         val searchButton = findViewById<Button>(R.id.searchButton)
 
         RxView.clicks(searchButton)

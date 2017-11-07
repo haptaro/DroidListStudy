@@ -11,7 +11,7 @@ class DetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_detail)
 
         val title = intent.getStringExtra("文字列")
-        
+
         (findViewById<TextView>(R.id.title)).text = title
     }
 }
