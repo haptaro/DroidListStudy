@@ -50,26 +50,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         val apiClient: ConnpassApi = retrofit.create(ConnpassApi::class.java)
 
-//        val events = listOf<Event>(
-//                Event("あ", "あいうえお", "2000"),
-//                Event("か", "かきくけこ", "2001"),
-//                Event("さ", "さしすせそ", "2002"),
-//                Event("た", "たちつてと", "2003"),
-//                Event("な", "なにぬねの", "2004"),
-//                Event("は", "はひふへほ", "2005"),
-//                Event("ま", "まみむめも", "2006"),
-//                Event("や", "やいゆえよ", "2007")
-//                )
-//
-//        handleResponse(events)
-
         apiClient
                 .fetchEvent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ connpassEvent ->
-
-//                    print(connpassEvent.events)
                     handleResponse(connpassEvent.events)
 
                 })
