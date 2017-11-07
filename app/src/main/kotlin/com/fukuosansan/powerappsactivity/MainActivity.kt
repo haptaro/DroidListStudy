@@ -3,12 +3,14 @@ package com.fukuosansan.powerappsactivity
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
 import com.jakewharton.rxbinding2.view.RxView
+import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -29,9 +31,15 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         val searchText = findViewById<EditText>(R.id.searchText)
         val searchButton = findViewById<Button>(R.id.searchButton)
 
-        RxView.clicks(searchButton).subscribe {
-            println("searchボタンをタップ！！！")
+        RxView.clicks(searchButton)
+                .subscribe {
+                    Log.d("タップ", "searchボタンをタップ！！！")
         }
+
+        RxTextView.textChanges(searchText)
+                .subscribe { text ->
+                    Log.d("入力", "===== 入力: ${text}")
+                }
 
         val retrofit = Retrofit.Builder()
                 .client(OkHttpClient())
