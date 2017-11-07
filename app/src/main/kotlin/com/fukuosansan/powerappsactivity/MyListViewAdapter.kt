@@ -22,7 +22,7 @@ class MyListViewAdapter(context: Context): ArrayAdapter<String>(context, 0) {
             contentView = layoutInflater.inflate(R.layout.my_listview_item, parent, false)
         }
 
-        contentView?.findViewById<TextView>(R.id.eventId)?.text = getItem(position)
+        contentView?.findViewById<TextView>(R.id.title)?.text = getItem(position)
 
         return contentView!!
     }

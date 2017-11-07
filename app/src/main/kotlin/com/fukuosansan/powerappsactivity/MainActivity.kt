@@ -15,24 +15,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
+    private lateinit var myListView: ListView
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val myListView = findViewById<ListView>(R.id.myListView)
-
-        val myListViewAdapter = MyListViewAdapter(this)
-
-        myListViewAdapter.add("あいうえお")
-        myListViewAdapter.add("かきくけこ")
-        myListViewAdapter.add("さしすせそ")
-        myListViewAdapter.add("たちつてと")
-        myListViewAdapter.add("なにぬねの")
-        myListViewAdapter.add("はひふへほ")
-        myListViewAdapter.add("まみむめも")
-        myListViewAdapter.add("やいゆえよ")
-
-        myListView.adapter = myListViewAdapter
+        myListView = findViewById<ListView>(R.id.myListView)
 
         val retrofit = Retrofit.Builder()
                 .client(OkHttpClient())
@@ -43,6 +32,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         val apiClient: ConnpassApi = retrofit.create(ConnpassApi::class.java)
 
+        val itemList = listOf("あいうえお", "かきくけこ", "さしすせそ", "たちつてと", "なにぬねの", "はひふへほ", "まみむめも", "やいゆえよ")
+
+        handleResponse(itemList)
+
         apiClient
                 .fetchEvent()
                 .subscribeOn(Schedulers.io())
@@ -51,6 +44,16 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
                     print(event)
                 })
+    }
+
+    private fun handleResponse(itemList: List<String>) {
+        val myListViewAdapter = MyListViewAdapter(this)
+
+        for (item in itemList) {
+            myListViewAdapter.add(item)
+        }
+
+        myListView.adapter = myListViewAdapter
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
