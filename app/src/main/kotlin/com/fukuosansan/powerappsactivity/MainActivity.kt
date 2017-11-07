@@ -4,8 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.View
-import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
@@ -18,7 +16,7 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
-class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var myListView: ListView
 
@@ -27,13 +25,24 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         setContentView(R.layout.activity_main)
 
         myListView = findViewById<ListView>(R.id.myListView)
+//        myListView.setOnItemClickListener(this)
+
+//        myListView.setOnItemClickListener { v ->
+//            val intent = Intent(this, DetailActivity::class.java)
+//            startActivity(intent)
+//        }
+
+        myListView.setOnItemClickListener { parent, view, position, id ->
+            val intent = Intent(this, DetailActivity::class.java)
+            startActivity(intent)
+        }
 
         val searchText = findViewById<EditText>(R.id.searchText)
         val searchButton = findViewById<Button>(R.id.searchButton)
 
         RxView.clicks(searchButton)
                 .subscribe {
-                    Log.d("タップ", "searchボタンをタップ！！！")
+                    sendRequest()
         }
 
         RxTextView.textChanges(searchText)
@@ -41,6 +50,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                     Log.d("入力", "===== 入力: ${text}")
                 }
 
+    }
+
+    private  fun sendRequest() {
         val retrofit = Retrofit.Builder()
                 .client(OkHttpClient())
                 .baseUrl("https://connpass.com/")
@@ -70,9 +82,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         myListView.adapter = myListViewAdapter
     }
 
-    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-        println("=====: アイテムがクリックされました!!!")
-        val intent = Intent(this, DetailActivity::class.java)
-        startActivity(intent)
-    }
+//    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+//        println("=====: アイテムがクリックされました!!!")
+//        val intent = Intent(this, DetailActivity::class.java)
+//        startActivity(intent)
+//    }
 }
