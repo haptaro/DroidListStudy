@@ -8,5 +8,5 @@ import retrofit2.http.GET
  */
 interface ConnpassApi {
     @GET("/api/v1/event")
-    fun fetchEvent(): Observable<Event>
+    fun fetchEvent(): Observable<ConnpassEvent>
 }

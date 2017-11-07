@@ -49,9 +49,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 .fetchEvent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ event ->
+                .subscribe({ connpassEvent ->
 
-                    print(event)
+                    print(connpassEvent.events)
+                    handleResponse(connpassEvent.events)
+
                 })
     }
 
