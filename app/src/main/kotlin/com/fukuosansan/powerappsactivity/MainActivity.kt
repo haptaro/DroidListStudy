@@ -6,6 +6,12 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ListView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
@@ -27,6 +33,24 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         myListViewAdapter.add("やいゆえよ")
 
         myListView.adapter = myListViewAdapter
+
+        val retrofit = Retrofit.Builder()
+                .client(OkHttpClient())
+                .baseUrl("https://connpass.com/")
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+        val apiClient: ConnpassApi = retrofit.create(ConnpassApi::class.java)
+
+        apiClient
+                .fetchEvent()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ event ->
+
+                    print(event)
+                })
     }
 
     override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
