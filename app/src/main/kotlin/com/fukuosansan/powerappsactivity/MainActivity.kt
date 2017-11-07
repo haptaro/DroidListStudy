@@ -8,6 +8,7 @@ import android.widget.AdapterView
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import com.jakewharton.rxbinding2.view.RxView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.OkHttpClient
@@ -27,7 +28,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         val searchText = findViewById<EditText>(R.id.searchText)
         val searchButton = findViewById<Button>(R.id.searchButton)
-        
+
+        RxView.clicks(searchButton).subscribe {
+            println("searchボタンをタップ！！！")
+        }
 
         val retrofit = Retrofit.Builder()
                 .client(OkHttpClient())
