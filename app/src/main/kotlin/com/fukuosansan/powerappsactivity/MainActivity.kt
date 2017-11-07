@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ListView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -22,6 +24,10 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
         setContentView(R.layout.activity_main)
 
         myListView = findViewById<ListView>(R.id.myListView)
+
+        val searchText = findViewById<EditText>(R.id.searchText)
+        val searchButton = findViewById<Button>(R.id.searchButton)
+        
 
         val retrofit = Retrofit.Builder()
                 .client(OkHttpClient())
