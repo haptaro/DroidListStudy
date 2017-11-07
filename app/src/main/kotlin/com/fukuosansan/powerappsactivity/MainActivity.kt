@@ -25,12 +25,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         myListView = findViewById<ListView>(R.id.myListView)
-//        myListView.setOnItemClickListener(this)
-
-//        myListView.setOnItemClickListener { v ->
-//            val intent = Intent(this, DetailActivity::class.java)
-//            startActivity(intent)
-//        }
 
         myListView.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, DetailActivity::class.java)
@@ -49,7 +43,6 @@ class MainActivity : AppCompatActivity() {
                 .subscribe { text ->
                     Log.d("入力", "===== 入力: ${text}")
                 }
-
     }
 
     private  fun sendRequest() {
@@ -81,10 +74,4 @@ class MainActivity : AppCompatActivity() {
 
         myListView.adapter = myListViewAdapter
     }
-
-//    override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-//        println("=====: アイテムがクリックされました!!!")
-//        val intent = Intent(this, DetailActivity::class.java)
-//        startActivity(intent)
-//    }
 }
