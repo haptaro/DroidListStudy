@@ -10,7 +10,7 @@ import android.widget.TextView
 /**
  * Created by fukuo on 2017/11/07.
  */
-class MyListViewAdapter(context: Context): ArrayAdapter<String>(context, 0) {
+class MyListViewAdapter(context: Context): ArrayAdapter<Event>(context, 0) {
     // あとでカスタムViewを取ってくるので、レイアウトインフレイターを持たせておく
     private val layoutInflater = LayoutInflater.from(context)
 
@@ -22,7 +22,8 @@ class MyListViewAdapter(context: Context): ArrayAdapter<String>(context, 0) {
             contentView = layoutInflater.inflate(R.layout.my_listview_item, parent, false)
         }
 
-        contentView?.findViewById<TextView>(R.id.title)?.text = getItem(position)
+        contentView?.findViewById<TextView>(R.id.title)?.text = getItem(position).event_id
+        contentView?.findViewById<TextView>(R.id.startedAt)?.text = getItem(position).startedAt
 
         return contentView!!
     }

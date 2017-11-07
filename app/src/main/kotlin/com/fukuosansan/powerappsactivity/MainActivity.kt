@@ -32,9 +32,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
 
         val apiClient: ConnpassApi = retrofit.create(ConnpassApi::class.java)
 
-        val itemList = listOf("あいうえお", "かきくけこ", "さしすせそ", "たちつてと", "なにぬねの", "はひふへほ", "まみむめも", "やいゆえよ")
+        val events = listOf<Event>(
+                Event("あ", "あいうえお", "2000"),
+                Event("か", "かきくけこ", "2001"),
+                Event("さ", "さしすせそ", "2002"),
+                Event("た", "たちつてと", "2003"),
+                Event("な", "なにぬねの", "2004"),
+                Event("は", "はひふへほ", "2005"),
+                Event("ま", "まみむめも", "2006"),
+                Event("や", "やいゆえよ", "2007")
+                )
 
-        handleResponse(itemList)
+        handleResponse(events)
 
         apiClient
                 .fetchEvent()
@@ -46,7 +55,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemClickListener {
                 })
     }
 
-    private fun handleResponse(itemList: List<String>) {
+    private fun handleResponse(itemList: List<Event>) {
         val myListViewAdapter = MyListViewAdapter(this)
 
         for (item in itemList) {

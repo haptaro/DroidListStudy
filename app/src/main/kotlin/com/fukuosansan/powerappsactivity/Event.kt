@@ -7,8 +7,10 @@ import com.google.gson.annotations.SerializedName
  */
 data class Event (
         val event_id: String,
-        val title: String
+        val title: String,
+        val startedAt: String
 )
+
 data class ConnpassEvent (
         @SerializedName("results_returned")
         val results: Int,
