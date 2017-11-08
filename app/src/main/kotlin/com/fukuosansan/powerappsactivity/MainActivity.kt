@@ -7,6 +7,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
+import android.widget.Toast
 import com.jakewharton.rxbinding2.view.RxView
 import com.jakewharton.rxbinding2.widget.RxTextView
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
                 }
     }
 
-    private  fun sendRequest() {
+    private fun sendRequest() {
         val retrofit = Retrofit.Builder()
                 .client(OkHttpClient())
                 .baseUrl("https://connpass.com/")
@@ -63,10 +64,16 @@ class MainActivity : AppCompatActivity() {
                 .fetchEvent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ connpassEvent ->
-                    eventItems = connpassEvent.events
-                    handleResponse(connpassEvent.events)
-                })
+                .subscribe(
+                        { connpassEvent ->
+                            eventItems = connpassEvent.events
+                            handleResponse(eventItems)
+                        },
+                        { e ->
+                            eventItems = createSeed()
+                            Toast.makeText(this, "通信に失敗しました", Toast.LENGTH_SHORT)
+                            handleResponse(eventItems)
+                        })
     }
 
     private fun handleResponse(itemList: List<Event>) {
@@ -78,4 +85,18 @@ class MainActivity : AppCompatActivity() {
 
         myListView.adapter = myListViewAdapter
     }
+
+    // 仮のseedData作成関数
+    private fun createSeed(): List<Event> {
+        val eventItems = listOf<Event>(
+                Event("1", "あいうえお", "2000", "東京", "ほげ"),
+                Event("2", "かきくけこ", "2001", "東京", "ほげ"),
+                Event("1", "たちつてと", "2002", "東京", "ほげ"),
+                Event("1", "なにぬねの", "2003", "東京", "ほげ"),
+                Event("1", "はひふへほ", "2004", "東京", "ほげ"),
+                Event("1", "やいゆえよ", "2004", "東京", "ほげ")
+        )
+        return eventItems
+    }
+
 }

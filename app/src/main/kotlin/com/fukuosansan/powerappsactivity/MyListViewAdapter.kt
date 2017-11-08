@@ -14,7 +14,6 @@ class MyListViewAdapter(context: Context): ArrayAdapter<Event>(context, 0) {
     // あとでカスタムViewを取ってくるので、レイアウトインフレイターを持たせておく
     private val layoutInflater = LayoutInflater.from(context)
 
-
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         var contentView = convertView
 
@@ -22,8 +21,11 @@ class MyListViewAdapter(context: Context): ArrayAdapter<Event>(context, 0) {
             contentView = layoutInflater.inflate(R.layout.my_listview_item, parent, false)
         }
 
-        contentView?.findViewById<TextView>(R.id.title)?.text = getItem(position).event_id
+        contentView?.findViewById<TextView>(R.id.title)?.text = getItem(position).title
         contentView?.findViewById<TextView>(R.id.startedAt)?.text = getItem(position).startedAt
+        contentView?.findViewById<TextView>(R.id.eventId)?.text = getItem(position).event_id
+        contentView?.findViewById<TextView>(R.id.place)?.text = getItem(position).place
+        contentView?.findViewById<TextView>(R.id.description)?.text = getItem(position).description
 
         return contentView!!
     }
