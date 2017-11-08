@@ -1,5 +1,6 @@
 package com.fukuosansan.powerappsactivity
 
+import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -17,10 +18,12 @@ import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
 
     private lateinit var myListView: ListView
     private lateinit var eventItems: List<Event>
+    private lateinit var progressDialog: ProgressDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         RxView.clicks(searchButton)
                 .subscribe {
                     // ローディング開始
+                    progressDialog = ProgressDialog.show(this, "通信中", "少々お待ち下さい", true)
                     sendRequest()
         }
 
@@ -73,6 +77,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe(
                         { connpassEvent ->
                             // ローディング成功
+                            progressDialog.dismiss()
                             eventItems = connpassEvent.events
                             handleResponse(eventItems)
                         },
@@ -81,6 +86,7 @@ class MainActivity : AppCompatActivity() {
                             Toast.makeText(this, "通信に失敗しました", Toast.LENGTH_SHORT).show()
                             handleResponse(eventItems)
                             // ローディング失敗
+                            progressDialog.dismiss()
                         })
     }
 
