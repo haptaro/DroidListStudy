@@ -10,8 +10,18 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val title = intent.getStringExtra("文字列")
+        val eventId = intent.getIntExtra("イベントID", 0)
+        val title = intent.getStringExtra("タイトル")
+        val description = intent.getStringExtra("説明")
+        val startedAt = intent.getStringExtra("開始時間")
+        val place = intent.getStringExtra("場所")
 
+
+        (findViewById<TextView>(R.id.eventId)).text = "${eventId}"
         (findViewById<TextView>(R.id.title)).text = title
+        (findViewById<TextView>(R.id.description)).text = description
+        (findViewById<TextView>(R.id.startedAt)).text = startedAt
+        (findViewById<TextView>(R.id.place)).text = place
+
     }
 }

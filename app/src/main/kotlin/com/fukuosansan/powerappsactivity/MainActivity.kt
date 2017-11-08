@@ -30,17 +30,23 @@ class MainActivity : AppCompatActivity() {
 
         myListView.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("文字列", eventItems[position].title)
+            intent.putExtra("イベントID", eventItems[position].event_id)
+            intent.putExtra("タイトル", eventItems[position].title)
+            intent.putExtra("説明", eventItems[position].description)
+            intent.putExtra("開始時間", eventItems[position].startedAt)
+            intent.putExtra("場除", eventItems[position].place)
             startActivity(intent)
         }
 
         val searchText = findViewById<EditText>(R.id.searchText)
         searchText.editableText.clear()
         searchText.isFocusable = false
+        searchText.hint = "検索対象"
         val searchButton = findViewById<Button>(R.id.searchButton)
 
         RxView.clicks(searchButton)
                 .subscribe {
+                    // ローディング開始
                     sendRequest()
         }
 
@@ -66,13 +72,15 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { connpassEvent ->
+                            // ローディング成功
                             eventItems = connpassEvent.events
                             handleResponse(eventItems)
                         },
                         { e ->
                             eventItems = createSeed()
-                            Toast.makeText(this, "通信に失敗しました", Toast.LENGTH_SHORT)
+                            Toast.makeText(this, "通信に失敗しました", Toast.LENGTH_SHORT).show()
                             handleResponse(eventItems)
+                            // ローディング失敗
                         })
     }
 
