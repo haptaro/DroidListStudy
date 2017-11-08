@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
  */
 data class Event (
         @SerializedName("event_id")
-        val event_id: String,
+        val event_id: Int,
         @SerializedName("title")
         val title: String,
         @SerializedName("started_at")

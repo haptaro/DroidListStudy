@@ -23,7 +23,7 @@ class MyListViewAdapter(context: Context): ArrayAdapter<Event>(context, 0) {
 
         contentView?.findViewById<TextView>(R.id.title)?.text = getItem(position).title
         contentView?.findViewById<TextView>(R.id.startedAt)?.text = getItem(position).startedAt
-        contentView?.findViewById<TextView>(R.id.eventId)?.text = getItem(position).event_id
+        contentView?.findViewById<TextView>(R.id.eventId)?.text = getItem(position).event_id as String
         contentView?.findViewById<TextView>(R.id.place)?.text = getItem(position).place
         contentView?.findViewById<TextView>(R.id.description)?.text = getItem(position).description
 
