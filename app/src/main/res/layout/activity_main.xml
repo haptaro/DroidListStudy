@@ -25,7 +25,9 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:singleLine="false"
         android:text="Name"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,6 +38,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginStart="8dp"
         android:text="検索"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/searchText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/searchText"

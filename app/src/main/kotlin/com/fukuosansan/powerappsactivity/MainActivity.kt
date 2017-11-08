@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var myListView: ListView
     private lateinit var eventItems: List<Event>
     private lateinit var progressDialog: ProgressDialog
+    private var userInputSearchText: String = ""
+    private lateinit var searchText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,14 +43,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val searchText = findViewById<EditText>(R.id.searchText)
+        searchText = findViewById<EditText>(R.id.searchText)
         searchText.editableText.clear()
-        searchText.isFocusable = false
         searchText.hint = "検索対象"
         val searchButton = findViewById<Button>(R.id.searchButton)
 
         RxView.clicks(searchButton)
                 .subscribe {
+                    searchText.isFocusable = false
+                    searchText.isFocusableInTouchMode = false
+                    searchText.isEnabled = false
                     // ローディング開始
                     progressDialog = ProgressDialog.show(this, "通信中", "少々お待ち下さい", true)
                     sendRequest()
@@ -56,8 +60,10 @@ class MainActivity : AppCompatActivity() {
 
         RxTextView.textChanges(searchText)
                 .subscribe { text ->
-                    Log.d("入力", "===== 入力: ${text}")
+                    userInputSearchText = text.toString()
                 }
+
+
     }
 
     private fun sendRequest() {
@@ -70,8 +76,9 @@ class MainActivity : AppCompatActivity() {
 
         val apiClient: ConnpassApi = retrofit.create(ConnpassApi::class.java)
 
+        Log.d("入力", "=========== ユーザが入力した検索文字列: ${userInputSearchText}")
         apiClient
-                .fetchEvent()
+                .fetchEvent(keyword = userInputSearchText)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
