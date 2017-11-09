@@ -35,10 +35,8 @@ class MainActivity : AppCompatActivity() {
 
         myListView.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, DetailActivity::class.java)
-//            intent.putExtra("イベントID", eventItems[position].event_id)
             intent.putExtra("タイトル", eventItems[position].title)
             intent.putExtra("説明", eventItems[position].description)
-//            intent.putExtra("開始時間", eventItems[position].startedAt)
             intent.putExtra("場除", eventItems[position].place)
             startActivity(intent)
         }
@@ -52,8 +50,6 @@ class MainActivity : AppCompatActivity() {
                 .subscribe {
                     searchText.isFocusable = false
                     searchText.isFocusableInTouchMode = false
-//                    searchText.isEnabled = false
-                    // ローディング開始
                     progressDialog = ProgressDialog.show(this, "通信中", "少々お待ち下さい", true)
                     sendRequest()
         }
@@ -83,7 +79,6 @@ class MainActivity : AppCompatActivity() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         { connpassEvent ->
-                            // ローディング成功
                             progressDialog.dismiss()
                             eventItems = connpassEvent.events
                             handleResponse(eventItems)
@@ -92,7 +87,6 @@ class MainActivity : AppCompatActivity() {
                             eventItems = createSeed()
                             Toast.makeText(this, "通信に失敗しました", Toast.LENGTH_SHORT).show()
                             handleResponse(eventItems)
-                            // ローディング失敗
                             progressDialog.dismiss()
                         })
     }
