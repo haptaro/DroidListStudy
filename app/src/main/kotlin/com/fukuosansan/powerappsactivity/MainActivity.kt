@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity() {
                 .subscribe {
                     searchText.isFocusable = false
                     searchText.isFocusableInTouchMode = false
-                    searchText.isEnabled = false
+//                    searchText.isEnabled = false
                     // ローディング開始
                     progressDialog = ProgressDialog.show(this, "通信中", "少々お待ち下さい", true)
                     sendRequest()
