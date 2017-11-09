@@ -17,10 +17,10 @@ class DetailActivity : AppCompatActivity() {
         val place = intent.getStringExtra("場所")
 
 
-        (findViewById<TextView>(R.id.eventId)).text = "${eventId}"
+//        (findViewById<TextView>(R.id.eventId)).text = "${eventId}"
         (findViewById<TextView>(R.id.title)).text = title
         (findViewById<TextView>(R.id.description)).text = description
-        (findViewById<TextView>(R.id.startedAt)).text = startedAt
+//        (findViewById<TextView>(R.id.startedAt)).text = startedAt
         (findViewById<TextView>(R.id.place)).text = place
 
     }

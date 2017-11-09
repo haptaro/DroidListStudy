@@ -35,10 +35,10 @@ class MainActivity : AppCompatActivity() {
 
         myListView.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("イベントID", eventItems[position].event_id)
+//            intent.putExtra("イベントID", eventItems[position].event_id)
             intent.putExtra("タイトル", eventItems[position].title)
             intent.putExtra("説明", eventItems[position].description)
-            intent.putExtra("開始時間", eventItems[position].startedAt)
+//            intent.putExtra("開始時間", eventItems[position].startedAt)
             intent.putExtra("場除", eventItems[position].place)
             startActivity(intent)
         }
