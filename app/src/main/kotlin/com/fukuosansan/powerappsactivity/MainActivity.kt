@@ -4,7 +4,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ListView
@@ -72,7 +71,6 @@ class MainActivity : AppCompatActivity() {
 
         val apiClient: ConnpassApi = retrofit.create(ConnpassApi::class.java)
 
-        Log.d("入力", "=========== ユーザが入力した検索文字列: ${userInputSearchText}")
         apiClient
                 .fetchEvent(keyword = userInputSearchText)
                 .subscribeOn(Schedulers.io())
@@ -84,9 +82,7 @@ class MainActivity : AppCompatActivity() {
                             handleResponse(eventItems)
                         },
                         { e ->
-                            eventItems = createSeed()
                             Toast.makeText(this, "通信に失敗しました", Toast.LENGTH_SHORT).show()
-                            handleResponse(eventItems)
                             progressDialog.dismiss()
                         })
     }
@@ -100,18 +96,4 @@ class MainActivity : AppCompatActivity() {
 
         myListView.adapter = myListViewAdapter
     }
-
-    // 仮のseedData作成関数
-    private fun createSeed(): List<Event> {
-        val eventItems = listOf<Event>(
-                Event(1, "あいうえお", "2000", "東京", "ほげ"),
-                Event(2, "かきくけこ", "2001", "神奈川", "ふー"),
-                Event(3, "たちつてと", "2002", "大阪", "ばー"),
-                Event(4, "なにぬねの", "2003", "北海道", "ぴよ"),
-                Event(5, "はひふへほ", "2004", "広島", "ボブ"),
-                Event(6, "やいゆえよ", "2005", "沖縄", "太郎")
-        )
-        return eventItems
-    }
-
 }
