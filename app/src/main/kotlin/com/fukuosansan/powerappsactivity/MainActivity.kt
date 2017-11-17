@@ -34,9 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         myListView.setOnItemClickListener { parent, view, position, id ->
             val intent = Intent(this, DetailActivity::class.java)
-            intent.putExtra("タイトル", eventItems[position].title)
-            intent.putExtra("説明", eventItems[position].description)
-            intent.putExtra("場除", eventItems[position].place)
+                    .putExtra("event", eventItems[position])
             startActivity(intent)
         }
 

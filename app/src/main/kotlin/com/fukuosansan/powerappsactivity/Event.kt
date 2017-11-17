@@ -1,6 +1,7 @@
 package com.fukuosansan.powerappsactivity
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * Created by fukuo on 2017/11/07.
@@ -16,7 +17,7 @@ data class Event (
         val place: String,
         @SerializedName("description")
         val description: String
-)
+): Serializable
 
 data class ConnpassEvent (
         @SerializedName("results_returned")
