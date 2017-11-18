@@ -33,9 +33,7 @@ class MainActivity : AppCompatActivity() {
         myListView = findViewById<ListView>(R.id.myListView)
 
         myListView.setOnItemClickListener { parent, view, position, id ->
-            val intent = Intent(this, DetailActivity::class.java)
-                    .putExtra("event", eventItems[position])
-            startActivity(intent)
+            startDetailActivity(position)
         }
 
         searchText = findViewById<EditText>(R.id.searchText)
@@ -57,6 +55,12 @@ class MainActivity : AppCompatActivity() {
                 }
 
 
+    }
+
+    private fun startDetailActivity(position: Int) {
+        val intent = Intent(this, DetailActivity::class.java)
+                .putExtra("event", eventItems[position])
+        startActivity(intent)
     }
 
     private fun sendRequest() {
